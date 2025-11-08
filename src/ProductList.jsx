@@ -276,7 +276,6 @@ function ProductList({ onHomeClick }) {
         setShowCart(false);
     };
     return (
-        <div>
             <div className="navbar" style={styleObj}>
                 <div className="tag">
                     <div className="luxury">
@@ -319,13 +318,7 @@ function ProductList({ onHomeClick }) {
       <span className="cart_quantity_count">{getTotalQuantity() || 0}</span>
     </h1>
   </a>
-</div>
-
-
-
-
-
-                    
+</div> 
             </div>
             {!showCart ? (
                 <div className="product-grid">
