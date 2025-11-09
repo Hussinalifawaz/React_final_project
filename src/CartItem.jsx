@@ -7,7 +7,6 @@ const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
-  
   const calculateTotalAmount = () => {
     let total = 0;
     cart.forEach(item => {
@@ -23,13 +22,15 @@ const CartItem = ({ onContinueShopping }) => {
     const cost = parseFloat(item.cost.substring(1));
     return quantity * cost;
   };
+
   const getTotalQuantity = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-};
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
 
   const handleIncrement = (item) => {
     dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
   };
+
   const handleCheckoutShopping = (e) => {
     alert('Functionality to be added for future reference');
   };
@@ -51,9 +52,12 @@ const CartItem = ({ onContinueShopping }) => {
     onContinueShopping(e); 
   };
 
+  const totalAmountValue = calculateTotalAmount();
+  const totalQuantityValue = getTotalQuantity();
+
   return (
     <div className="cart-container">
-      <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount()}</h2>
+      <h2 style={{ color: 'black' }}>Total Cart Amount: ${totalAmountValue.toFixed(2)}</h2>
 
       <div>
         {cart.map(item => (
@@ -67,16 +71,16 @@ const CartItem = ({ onContinueShopping }) => {
                 <span className="cart-item-quantity-value">{item.quantity}</span>
                 <button className="cart-item-button cart-item-button-inc" onClick={() => handleIncrement(item)}>+</button>
               </div>
-              <h4 className='total_amt'>Total Items: {getTotalQuantity()}</h4>
-              <h4 className='total_amt'>Total: ${calculateTotalAmount()}</h4>
-              <div className="cart-item-total">Total: ${calculateTotalCost(item)}</div>
+              <div className="cart-item-total">Total: ${calculateTotalCost(item).toFixed(2)}</div>
               <button className="cart-item-delete" onClick={() => handleRemove(item)}>Delete</button>
             </div>
           </div>
         ))}
       </div>
 
-      <div style={{ marginTop: '20px', color: 'black' }} className='total_cart_amount'></div>
+      <div style={{ marginTop: '20px', color: 'black' }} className='total_cart_amount'>
+        Total Items: {totalQuantityValue}
+      </div>
 
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={handleContinueShopping}>Continue Shopping</button>
